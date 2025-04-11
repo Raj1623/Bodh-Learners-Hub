@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bodh Learners Hub</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8fafc;
+      animation: backgroundDrift 60s linear infinite;
+    }
+
+    @keyframes backgroundDrift {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+
+    header {
+      background: #3b82f6;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      animation: slideDown 1s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #e2e8f0;
+      padding: 10px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #1e293b;
+      font-weight: bold;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    nav a:hover {
+      color: #3b82f6;
+      transform: scale(1.1);
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #e2e8f0;
+      font-size: 14px;
+      margin-top: 30px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .schedule-section {
+      max-width: 800px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    .schedule-button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .schedule-button:hover {
+      background: #1d4ed8;
+      transform: scale(1.05);
+    }
+
+    .schedule {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out forwards;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      color: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #e2e8f0;
+    }
+
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 40px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    #Notes.section {
+      background-image: url('blue.jpg');
+    }
+
+    #Events.section {
+      background-image: url('book.jpg');
+    }
+
+    #scheduleSection.section {
+      background-image: url('cloud.jpg');
+      color: #000;
+    }
+
+    #contact.section {
+      background: linear-gradient(to right, #d0f4de, #dff6ff);
+      color: #1f2937;
+    }
+
+    #Notes.section::before,
+    #Events.section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+      border-radius: inherit;
+    }
+
+    .section *:not(style) {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #Notes .card,
+    #Events .card,
+    #contact .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: none;
+      color: rgb(30, 29, 29);
+    }
+
+    #scheduleSection .card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+    }
+
+    #contactForm {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: black;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    #contactForm input, #contactForm textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    #contactForm input:focus, #contactForm textarea:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+
+    #contactForm button {
+      background: #3b82f6;
+      color: rgb(241, 239, 239);
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #contactForm button:hover {
+      background: #2563eb;
+    }
+
+    #successMessage {
+      display: none;
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* 🌟 NEW REGISTRATION MODAL */
+    #registrationModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #registrationModal .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    #registrationModal input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    #registrationModal input:focus {
+      border-color: #3b82f6;
+      outline: none;
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+    }
+
+    #registrationModal button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    #registrationModal button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ Registration Modal -->
+<div id="registrationModal">
+  <div class="modal-content">
+    <h2>🔐 Register</h2>
+    <p>Join our learning journey!</p>
+    <form id="registrationForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</div>
+
+  <img src="bodh1.jpg" alt="Logo" style="position: fixed; top: 10px; left: 10px; height: 50px; z-index: 1001; border-radius: 6px;">
+
+  <header>
+    <h1>📚 Bodh Learners Hub</h1>
+    <p>Connecting Students. Sharing Knowledge.</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#Notes">Notes</a>
+    <a href="#scheduleSection">Schedule</a>
+    <a href="#Events">Events</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2>Welcome to Bodh Learners Hub!</h2>
+      <button class="schedule-button" onclick="toggleAbout()">About</button>
+      <div id="aboutSection" class="schedule">
+        <p>We’re thrilled to have you join our learning community. Here’s what BODH is all about:</p>
+        <ul>
+          <li>🚀 Practical, Passion-driven Learning</li>
+          <li>🤝 One-on-One Mentorship & Personalized Lessons</li>
+          <li>🎓 Skill Mastery + Industry-Ready Certifications</li>
+          <li>🌍 Learn. Grow. Earn—Anytime, Anywhere.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="social-icons">
+    <a href="https://instagram.com/bodh" target="_blank" class="icon instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://linkedin.com/company/bodh" target="_blank" class="icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://bodh1oh1.com" target="_blank" class="icon website"><i class="fas fa-globe"></i></a>
+  </div>
+</div>
+  <section id="Notes" class="section">
+    <div class="card">
+      <h3>📥 Uniqueness of BODH</h3>
+      <ul>
+        <li>One-on-One Online Classes</li>
+        <li>Personalized lessons tailored to your learning pace</li>
+        <li>Hands-on Experience</li>
+        <li>Get Certified on completion of each module</li>
+        <li>Personalized Learning Modules for your goals</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="Events" class="section">
+    <div class="card">
+      <h3>📅 This Week's Events</h3>
+      <p>📌 Flexible Learning with Guidance and Support...</p>
+      <p>Interactive Q&A sessions with instructors...</p>
+    </div>
+  </section>
+
+  <section id="scheduleSection" class="schedule-section section">
+    <div class="card">
+      <h2>📅 Weekly Class Schedule</h2>
+      <button class="schedule-button" onclick="toggleSchedule()">View Schedule</button>
+      <div id="scheduleTable" class="schedule">
+        <table>
+          <thead>
+            <tr><th>Day</th><th>Subject</th><th>Time</th><th>Room</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Monday</td><td>Technical</td><td>7:00–8:30 PM</td><td>Online</td></tr>
+            <tr><td>Tuesday</td><td>Research</td><td>7:00–8:15 PM</td><td>Online</td></tr>
+            <tr><td>Wednesday</td><td>Management</td><td>7:00–8:30 PM</td><td>Online</td></tr>
+            <tr><td>Thursday</td><td>Marketing</td><td>7:00–8:30 PM</td><td>Online</td></tr>
+            <tr><td>Friday</td><td>Interactive Sessions</td><td>7:30–8:00 PM</td><td>Conference</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📞 Contact Section -->
+  <section id="contact" class="section">
+    <div class="card">
+      <h2>📬 Contact Us</h2>
+      <div class="contact-info">
+        <div class="info-box">
+            <p> 📍proddatur,kadapa   📞+91 8309657714  ✉ bodh1oh1@gmail.com  🌐 bodh1oh1.com</p>
+        </div>
+    </div>
+      <form id="contactForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+        <div id="successMessage">✅ Thank you! Your message has been sent.</div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    © 2024 BODHIFY ONLINE EDUCATION (OPC) PVT. LTD. All Rights Reserved
+  </footer>
+
+  <script>
+    function toggleSchedule() {
+      const schedule = document.getElementById("scheduleTable");
+      schedule.style.display = schedule.style.display === "none" || schedule.style.display === "" ? "block" : "none";
+    }
+
+    function toggleAbout() {
+      const about = document.getElementById("aboutSection");
+      about.style.display = about.style.display === "none" || about.style.display === "" ? "block" : "none";
+    }
+
+    window.onload = function () {
+      if (!localStorage.getItem("registered")) {
+        document.getElementById("registrationModal").style.display = "flex";
+      }
+    };
+
+    
+  // Show modal if not registered
+  window.onload = function () {
+    if (!localStorage.getItem("registered")) {
+      document.getElementById("registrationModal").style.display = "flex";
+    }
+  };
+
+  document.getElementById("registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    localStorage.setItem("registered", "true");
+    localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
+    document.getElementById("registrationModal").style.display = "none";
+    alert(`🎉 Welcome to Bodh, ${name}!`);
+  });
+</script>
+</body>
+</html>
